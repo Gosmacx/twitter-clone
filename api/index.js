@@ -208,6 +208,9 @@ app.post("/upload", auth, upload.array('files'), async (req, res) => {
 
         try {
             let isHasPhoto = user[data[0]]?.split('/').pop()
+            // in database data => http://localhost:3030/xxx.webp, we split from '/' and select last item with pop() so we obtained img name.
+            // transaction result => xxx.webp
+            
             if (isHasPhoto) fs.unlinkSync(path.resolve() + `\\images\\${isHasPhoto}`);
             // output => 'C:\\Users\\xxx\\xxx\\twitter-api\\xxx.webp' 
         } catch (error) {
