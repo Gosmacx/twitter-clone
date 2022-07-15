@@ -1,0 +1,21 @@
+body {
+    font-family: 'Chirp';
+}
+
+@font-face {
+    font-family: 'Chirp';
+    src: url('Chirp.ttf'),
+        url('Chirp-Bold.ttf'),
+        url('Chirp-Heavy.ttf'),
+        url('Chirp-Medium.ttf');
+}
+
+#edit ::-webkit-scrollbar {
+    width: 0;
+}
+
+.userBoxX {
+    -webkit-box-shadow: 0px 0px 10px 2px rgba(255,255,255,1);
+    -moz-box-shadow: 0px 0px 10px 2px rgba(255,255,255,1);
+    box-shadow: 0px 0px 10px 2px rgba(255,255,255,1);
+}

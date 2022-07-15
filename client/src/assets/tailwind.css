@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components{
+    
+    .nav-link {
+        @apply flex items-center justify-start gap-4 transition-all hover:bg-[#181818] rounded-[30px] px-4 py-3
+    }
+
+    .nav-link span{
+        @apply text-xl hidden md:block
+    }
+
+
+}
