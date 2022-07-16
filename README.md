@@ -14,7 +14,7 @@ Fully functional mern-stack twitter clone application
  - `JWT` 
  
 ## Image Upload/Resize
-![gif](https://github.com/Gosmacx/twitter-clone/blob/master/screenshots/resize-images.gif?raw=true)
+![gif](https://github.com/Gosmacx/twitter-clone/blob/master/screenshots/resize-imagesv2.gif?raw=true)
 
  
 ## Screenshots
