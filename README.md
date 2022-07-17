@@ -16,6 +16,10 @@ Fully functional mern-stack twitter clone application
 ## Image Upload/Resize
 ![gif](https://github.com/Gosmacx/twitter-clone/blob/master/screenshots/resize-imagesv2.gif?raw=true)
 
+## Video
+
+https://user-images.githubusercontent.com/50182711/179420591-847d2592-0091-4176-ae90-961df57db332.mp4
+
  
 ## Screenshots
 
