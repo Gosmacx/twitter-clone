@@ -11,7 +11,8 @@ import {
     login, 
     logintoken, 
     register,
-    updateUser
+    updateUser,
+    uploadImages
 } from '../controllers/user.controller.js'
 
 const storage = multer.memoryStorage();
@@ -35,7 +36,7 @@ router.post("/userTweets", getUserTweets)
 
 router.post("/tweet", auth, createTweet)
 
-router.post("/upload", auth, upload.array('files'), followManager)
+router.post("/upload", auth, upload.array('files'), uploadImages)
 
 router.post("/update", auth, updateUser)
 

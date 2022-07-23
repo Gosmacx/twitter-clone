@@ -4,7 +4,6 @@ import mongoose  from "mongoose"
 import routes from './routes/routes.js'
 import dontenv from "dotenv";
 dontenv.config()
-console.log(process.env.merhaba)
 
 const port = process.env.PORT || 3030
 const app = express()

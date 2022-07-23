@@ -8,6 +8,10 @@ import { v4 }  from 'uuid'
 import userSchema from "../schemas/user.js"
 import Tweet from "../schemas/tweet.js"
 
+function uid() {
+    return new Date(Date.now()).getTime() + Math.floor(Math.random() * (99 + 10) + 10)
+}
+
 // Login
 export const login = async (req, res) => {
     const { username, password } = req.body
