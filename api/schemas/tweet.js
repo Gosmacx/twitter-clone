@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose"
 
 const schema = mongoose.Schema({
    user: String,
@@ -7,4 +7,4 @@ const schema = mongoose.Schema({
    content: String
 })
 
-module.exports = mongoose.model("tweet", schema)
+export default mongoose.model("tweet", schema);

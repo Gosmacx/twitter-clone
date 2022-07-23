@@ -38,6 +38,5 @@ root.render(
       </div>
 
     </Provider>
-  </HistoryRouter>,
-
+  </HistoryRouter>
 );
