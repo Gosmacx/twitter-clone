@@ -21,7 +21,7 @@ function App() {
     const createAccount = () => {
         if (!username || !name || !password || !mail || loading) return;
         setLoading(true)
-        const cryptedPassword = CryptoJS.AES.encrypt(password, 'asd123').toString()
+        const cryptedPassword = CryptoJS.AES.encrypt(password, import.meta.env.VITE_SECRET_KEY).toString()
         axios.post('/register', {
             password: cryptedPassword,
             username,

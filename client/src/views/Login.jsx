@@ -25,8 +25,8 @@ function App() {
         if (loading) return
         if (!username || !password) return;
         setLoading(true)
-        const cryptedName = CryptoJS.AES.encrypt(username, "asd123").toString()
-        const cryptedPswrd = CryptoJS.AES.encrypt(password, "asd123").toString()
+        const cryptedName = CryptoJS.AES.encrypt(username, import.meta.env.VITE_SECRET_KEY).toString()
+        const cryptedPswrd = CryptoJS.AES.encrypt(password, import.meta.env.VITE_SECRET_KEY).toString()
         axios.post("/login", {
             username: cryptedName,
             password: cryptedPswrd

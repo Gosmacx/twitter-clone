@@ -18,15 +18,15 @@ export const login = async (req, res) => {
     if (!username || !password)
         return res.status(500).send("Err")
 
-    const decryptUsername = CryptoJS.AES.decrypt(username, 'asd123');
+    const decryptUsername = CryptoJS.AES.decrypt(username, process.env.secretKey);
     var originalUsername = decryptUsername.toString(CryptoJS.enc.Utf8);
 
     const user = await userSchema.findOne({ username: originalUsername })
     if (!user)
         return res.status(500).send("Err")
 
-    const passwordInDb = CryptoJS.AES.decrypt(user.password, 'asd123')
-    const joinedPassword = CryptoJS.AES.decrypt(password, 'asd123')
+    const passwordInDb = CryptoJS.AES.decrypt(user.password, process.env.secretKey)
+    const joinedPassword = CryptoJS.AES.decrypt(password, process.env.secretKey)
 
     const orginalDB = passwordInDb.toString(CryptoJS.enc.Utf8)
     const orginalPswrd = joinedPassword.toString(CryptoJS.enc.Utf8)
