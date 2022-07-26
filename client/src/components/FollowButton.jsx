@@ -2,6 +2,7 @@ import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
 import { updateUser } from "../store/user";
 import axios from "../utils/axios";
+import { followUser } from '../api/requests/requests'
 
 function App({ active, user, followersCallback, followingCallback }) {
 
@@ -21,30 +22,29 @@ function App({ active, user, followersCallback, followingCallback }) {
 
     const follow = () => {
         if (fLoading) return;
-        setfLoading(true)
-        axios.post("/follow", { followToId: user.id, id: currentUser.id }, currentUser.token)
-            .then(response => {
-                if (!response.data) return
+        let sendToData = {
+            data: { followToId: user.id, id: currentUser.id }, 
+            token: currentUser.token
+        }
+        const response = (data) => {
+            const fToFollowing = data.followToUser.following
+            const fToFollowers = data.followToUser.followers
 
+            const userFollowers = data.user.followers
+            const userFollowing = data.user.following
 
-                const fToFollowing = response.data.followToUser.following
-                const fToFollowers = response.data.followToUser.followers
+            if (followersCallback) followersCallback(fToFollowers)
+            if (followingCallback) followingCallback(fToFollowing)
 
-                const userFollowers = response.data.user.followers
-                const userFollowing = response.data.user.following
+            setFollowing(fToFollowing)
+            setFollowers(fToFollowers)
+            dispatch(updateUser({
+                followers: userFollowers,
+                following: userFollowing
+            }))
+        }
+        followUser(sendToData, response, setfLoading)
 
-                if (followersCallback) followersCallback(fToFollowers)
-                if (followingCallback) followingCallback(fToFollowing)
-
-                setFollowing(fToFollowing)
-                setFollowers(fToFollowers)
-                dispatch(updateUser({
-                    followers: userFollowers,
-                    following: userFollowing
-                }))
-
-                setfLoading(false)
-            }).catch(() => setfLoading(false))
     }
 
 

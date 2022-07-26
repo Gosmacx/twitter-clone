@@ -69,3 +69,18 @@ export const createTweet = (data, responseCB) => {
             return null
         })
 }
+
+export const followUser = ({data, token}, responseCB, loadingCB) => {
+    if (loadingCB) loadingCB(true)
+    return axios
+        .post(url.FOLLOW_MANAGER, data, token)
+        .then(response => {
+            if (loadingCB) loadingCB(false)
+            if (responseCB) responseCB(response.data)
+            return response.data
+        })
+        .catch(err => {
+            if (loadingCB) loadingCB(false)
+            return null
+        })
+}
