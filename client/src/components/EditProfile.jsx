@@ -29,27 +29,27 @@ function App({ setEditMode }) {
 
     const update = (d) => {
         const data = document.getElementById(`${d}Input`).files[0]
-        document.getElementById(`${d}Img`).src = URL.createObjectURL(data)
+        if (data) document.getElementById(`${d}Img`).src = URL.createObjectURL(data);
     }
 
     const sendPhoto = () => {
         if (loading) return
-        if (description.length < 3 || name.length < 3 ) return alert("Boş bırakamazsın.")
+        if (description.length < 3 || name.length < 3) return alert("Boş bırakamazsın.")
         setLoading(true)
 
         if (banner || photo) {
-            
+
             const formData = new FormData();
             if (banner) formData.append("files", banner, `banner-${user.id}`);
             if (photo) formData.append("files", photo, `photo-${user.id}`);
 
             axios.post("/upload", formData, user.token)
-            .then(response => {
-                setLoading(false)
-                dispatch(updateUser(response.data))
-            })
-            .catch((err) => setLoading(false));
-                
+                .then(response => {
+                    setLoading(false)
+                    dispatch(updateUser(response.data))
+                })
+                .catch((err) => setLoading(false));
+
         }
 
         axios.post("/update", {
@@ -57,14 +57,14 @@ function App({ setEditMode }) {
             description,
             name
         }, user.token)
-        .then(response => {
-            if (!response.data) return;
-            dispatch(updateUser(response.data))
-            setDescription(response.data.description)
-            setName(response.data.name)
-            setLoading(false)
-        })
-        .catch(() => setLoading(false))
+            .then(response => {
+                if (!response.data) return;
+                dispatch(updateUser(response.data))
+                setDescription(response.data.description)
+                setName(response.data.name)
+                setLoading(false)
+            })
+            .catch(() => setLoading(false))
 
 
 

@@ -8,6 +8,7 @@ import Default from '../assets/default.png'
 import { useNavigate, Link } from 'react-router-dom'
 import FollowButton from './FollowButton'
 import { useSelector } from 'react-redux'
+import { getUser } from '../api/requests/requests'
 
 function App({ id, content, date }) {
 
@@ -21,17 +22,18 @@ function App({ id, content, date }) {
         return Math.floor(Math.random() * (10000 - 1500) + 1500);
     }
 
+    const userManager = async () => {
+        const data = await getUser({ id })
+        if (data) {
+            setUser(data)
+            followersCallback(data.followers)
+            followingCallback(data.following)
+        }
+    }
+
     useEffect(() => {
         if (user) return
-        axios.post("/user", { id: id })
-            .then(response => {
-                setUser(response.data)
-                followersCallback(response.data.followers)
-                return followingCallback(response.data.following)
-            })
-            .catch(() => {
-                return;
-            })
+        userManager()
     }, [])
 
     const goPage = () => {
@@ -51,14 +53,14 @@ function App({ id, content, date }) {
 
                     <div className='flex flex-col items-start justify-start w-full' >
                         <a onClick={goPage} className='font-semibold cursor-pointer hover:underline text-lg mt-1' > {user?.name} </a>
-                        <span className='text-[#54595D]' > @{ user.username } </span>
+                        <span className='text-[#54595D]' > @{user.username} </span>
                     </div>
 
-                    <span > { user.description } </span>
+                    <span > {user.description} </span>
 
                     <div className='flex items-start gap-2 w-full justify-start' >
-                    <Link to={`/${user.username}/following`} className='text-sm hover:underline cursor-pointer ' ><strong> {following?.length} </strong> <span className='text-[#71767B]' >Takip edilen</span></Link>
-                    <Link to={`/${user.username}/followers`} className='text-sm hover:underline cursor-pointer ' ><strong> {followers?.length} </strong> <span className='text-[#71767B]' >Takipçi</span></Link>
+                        <Link to={`/${user.username}/following`} className='text-sm hover:underline cursor-pointer ' ><strong> {following?.length} </strong> <span className='text-[#71767B]' >Takip edilen</span></Link>
+                        <Link to={`/${user.username}/followers`} className='text-sm hover:underline cursor-pointer ' ><strong> {followers?.length} </strong> <span className='text-[#71767B]' >Takipçi</span></Link>
                     </div>
 
                 </div>
@@ -74,15 +76,15 @@ function App({ id, content, date }) {
                 <div className='flex w-full gap-16 mt-4' >
                     <div className='flex items-start justify-center gap-3 group cursor-pointer' >
                         <img src={comment} width="20" alt="" />
-                        <span className='text-[#54595D] text-sm !w-9 !max-w-[2.25rem] overflow-hidden transition-all group-hover:text-[#1D9BF0] ' > { randomNumber() } </span>
+                        <span className='text-[#54595D] text-sm !w-9 !max-w-[2.25rem] overflow-hidden transition-all group-hover:text-[#1D9BF0] ' > {randomNumber()} </span>
                     </div>
                     <div className='flex items-start justify-center gap-3 group cursor-pointer' >
                         <img src={retweet} width="20" alt="" />
-                        <span className='text-[#54595D] text-sm !w-9 !max-w-[2.25rem] overflow-hidden transition-all group-hover:text-[#00BA7C] ' > { randomNumber() } </span>
+                        <span className='text-[#54595D] text-sm !w-9 !max-w-[2.25rem] overflow-hidden transition-all group-hover:text-[#00BA7C] ' > {randomNumber()} </span>
                     </div>
                     <div className='flex items-center justify-center gap-3 group cursor-pointer' >
                         <img src={heart} width="20" className='' alt="" />
-                        <span className='text-[#54595D] text-sm !w-9 !max-w-[2.25rem] overflow-hidden transition-all group-hover:text-[#DE1673] ' > { randomNumber() } </span>
+                        <span className='text-[#54595D] text-sm !w-9 !max-w-[2.25rem] overflow-hidden transition-all group-hover:text-[#DE1673] ' > {randomNumber()} </span>
                     </div>
                     <div className='hidden md:flex items-start justify-center gap-3 group' >
                         <img src={upload} width="20" alt="" />

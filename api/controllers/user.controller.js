@@ -116,18 +116,16 @@ export const getHome = async (req, res) => {
     res.send(tweets.reverse())
 }
 
-// Get user information
+// Get user information with optional query
 export const getUser = async (req, res) => {
-    const { id, username } = req.body
-    if (!id && !username) return res.status(500).send("Err")
+    const { id, username } = req.query
+    if (!id && !username) return res.status(406).send("Misuse")
 
-    var search;
+    var search = id ? { id } : { username }
 
-    if (id) search = { id }
-    else search = { username }
 
     const user = await userSchema.findOne(search)
-    if (!user) return res.status(500).send("Err")
+    if (!user) return res.status(404).send("Not found.")
 
     res.send({
         username: user.username,
@@ -143,9 +141,9 @@ export const getUser = async (req, res) => {
 
 // Get specific tweets
 export const getUserTweets = async (req, res) => {
-    const { user } = req.body
+    const { user } = req.query
 
-    if (!user) return res.status(404).send("Err")
+    if (!user) return res.status(406).send("Misuse")
     const tweets = await Tweet.find({ user: user })
 
     res.send(tweets.reverse())

@@ -10,7 +10,7 @@ import CreateTweet from '../components/createTweet'
 import Loading from '../components/Loading'
 
 import { useSelector } from 'react-redux'
-import axios from '../utils/axios'
+import { getHome } from '../api/requests/requests'
 
 function App() {
 
@@ -21,13 +21,7 @@ function App() {
   const navigate = useNavigate()
 
   const refresh = () => {
-    setLoading(true)
-    axios.get("/home")
-      .then(response => {
-        setLoading(false)
-        setTweets(response.data)
-      })
-      .catch(e => console.log(e))
+    getHome(setTweets, setLoading)
   }
 
   useEffect(() => {

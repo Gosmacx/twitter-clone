@@ -4,6 +4,7 @@ import { useSelector } from "react-redux"
 import Default from '../assets/default.png'
 import axios from "../utils/axios"
 import FollowButton from './FollowButton'
+import { getUser } from '../api/requests/requests'
 
 function App({ id }) {
 
@@ -13,12 +14,7 @@ function App({ id }) {
 
 
     useEffect(() => {
-        axios.post("/user", {
-            id: id
-        }, currentUser.token).then(response => {
-        if (!response.data) return navigate("/home")
-            setUser(response.data)
-        }).catch(() => navigate("/home"))
+        getUser({ id }, setUser)
     }, [])
 
     if (!user) return;

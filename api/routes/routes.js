@@ -24,15 +24,15 @@ router.get("/", (req, res) => res.send("just dev."))
 
 router.get("/home", getHome)
 
+router.get("/user", getUser)
+
+router.get("/userTweets", getUserTweets)
+
 router.post("/register", register)
 
 router.post("/login", login)
 
 router.post("/auth", logintoken)
-
-router.post("/user", getUser)
-
-router.post("/userTweets", getUserTweets)
 
 router.post("/tweet", auth, createTweet)
 

@@ -7,7 +7,7 @@ import SearchComp from '../components/suggestions/Search'
 import UsersBox from '../components/suggestions/UsersBox'
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import axios from '../utils/axios'
+import { getTweets, getUser } from '../api/requests/requests'
 
 function App() {
     const [user, setUser] = useState(null)
@@ -22,26 +22,19 @@ function App() {
     const activeClasses = "font-bold border-b-4 border-[#1d9bf0]"
 
     useEffect(() => {
-        setLoading(true)
 
-        axios.post("/user", {
-            username: params.username
-        }).then(response => {
-            setLoading(false)
-            if (!response.data) return navigate("/home")
-            setUser(response.data)
-
-            if (params.type == 'following') setCurrentMode(response.data.following)
-            else if (params.type == 'followers') setCurrentMode(response.data.followers);
-
-            if (!tweets) {
-                axios.post("/userTweets", {
-                    user: response.data.id
-                }).then(x => setTweets(x.data))
-                .catch((e) => console.log(e))
+        async function managePage() {
+            const response = (data) => {
+                setUser(data)
+                if (params.type == 'following') setCurrentMode(data.following)
+                else if (params.type == 'followers') setCurrentMode(data.followers);
+                getTweets({ user: data.id }, setTweets)
             }
+            await getUser({ username: params.username }, response, setLoading)
+        }
 
-        }).catch(() => navigate("/home"))
+        managePage()
+
     }, [params])
 
 

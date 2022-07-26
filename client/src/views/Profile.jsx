@@ -13,7 +13,7 @@ import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import axios from '../utils/axios'
-
+import { getUser, getTweets } from '../api/requests/requests'
 
 
 function App() {
@@ -55,16 +55,15 @@ function App() {
 
     }
 
-    const getTweets = (id) => {
-        setLoading(true)
-        axios.post("/userTweets", {
-            user: id
-        })
-            .then(response => {
-                setLoading(false)
-                setTweets(response.data)
-            })
-            .catch((e) => console.log(e))
+    const userManager = async () => {
+        const data = await getUser({ username: params.username }, setUser)
+        if (data) {
+            followersCallback(data.followers)
+            followingCallback(data.following)
+            getTweets({ user: data.id }, setTweets, setLoading)
+        } else {
+            navigate("/home")
+        }
     }
 
     useEffect(() => {
@@ -74,20 +73,12 @@ function App() {
             setUser(currentUser)
             followersCallback(currentUser.followers)
             followingCallback(currentUser.following)
-            return getTweets(currentUser.id)
+            getTweets({ user: currentUser.id }, setTweets, setLoading)
+            return;
         }
 
         if (user) return;
-
-        axios.post("/user", {
-            username: params.username
-        }).then(response => {
-            if (!response.data) return navigate("/home")
-            setUser(response.data)
-            followersCallback(response.data.followers)
-            followingCallback(response.data.following)
-            getTweets(response.data.id)
-        }).catch(() => navigate("/home"))
+        userManager()
 
     }, [params, currentUser])
 
@@ -126,7 +117,9 @@ function App() {
                                         </div>
                                         <div></div>
                                         <EditButton active={selfMode} />
-                                        <FollowButton active={!selfMode} user={user} followersCallback={followersCallback} followingCallback={followingCallback} />
+                                        <div className='!w-32 h-8 flex items-center justify-center' >
+                                            <FollowButton active={!selfMode} user={user} followersCallback={followersCallback} followingCallback={followingCallback} />
+                                        </div>
                                     </div>
                                     <div className='h-10 w-full' ></div>
                                 </div>
