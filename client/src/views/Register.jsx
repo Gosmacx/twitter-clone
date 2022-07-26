@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { login } from '../store/user'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from "react-router-dom";
+import { registerUser } from '../api/requests/requests'
 
 function App() {
 
@@ -20,19 +21,23 @@ function App() {
 
     const createAccount = () => {
         if (!username || !name || !password || !mail || loading) return;
-        setLoading(true)
         const cryptedPassword = CryptoJS.AES.encrypt(password, import.meta.env.VITE_SECRET_KEY).toString()
-        axios.post('/register', {
+        
+        let sendToData = {
             password: cryptedPassword,
             username,
             name,
-            mail,
-        }).then(response => {
-            setLoading(false)
-            if (!response.data || !response?.data?.username) return;
-            dispatch(login(response.data))
+            mail
+        }
+
+        const response = (data) => {
+            if (!data || !data?.username) return;
+            dispatch(login(data))
             navigate("/home")
-        })
+        }
+
+        registerUser(sendToData, response, setLoading)
+
     }
 
     return (

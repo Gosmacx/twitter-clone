@@ -6,10 +6,27 @@ responseCB (Response Callback) => It is the function that is run when a response
 loadingCB (Loading Callback) => Handles a loading state if the calling party has a loading state
 */
 
+// Login with username and password
 export const loginUser = (data, responseCB, loadingCB) => {
     if (loadingCB) loadingCB(true)
     return axios
         .post(url.LOGIN_USER, data)
+        .then(response => {
+            if (loadingCB) loadingCB(false)
+            if (responseCB) responseCB(response.data)
+            return response.data
+        })
+        .catch(err => {
+            if (loadingCB) loadingCB(true)
+            return null
+        })
+}
+
+// Register a user
+export const registerUser = (data, responseCB, loadingCB) => {
+    if (loadingCB) loadingCB(true)
+    return axios
+        .post(url.REGISTER_USER, data)
         .then(response => {
             if (loadingCB) loadingCB(false)
             if (responseCB) responseCB(response.data)
