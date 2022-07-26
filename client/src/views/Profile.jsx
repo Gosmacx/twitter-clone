@@ -117,9 +117,9 @@ function App() {
                                         </div>
                                         <div></div>
                                         <EditButton active={selfMode} />
-                                        <div className='!w-32 h-8 flex items-center justify-center' >
-                                            <FollowButton active={!selfMode} user={user} followersCallback={followersCallback} followingCallback={followingCallback} />
-                                        </div>
+
+                                        <FollowButton active={!selfMode} user={user} followersCallback={followersCallback} followingCallback={followingCallback} />
+
                                     </div>
                                     <div className='h-10 w-full' ></div>
                                 </div>

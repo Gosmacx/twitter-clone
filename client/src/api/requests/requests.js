@@ -36,7 +36,7 @@ export const registerUser = (data, responseCB, loadingCB) => {
             if (loadingCB) loadingCB(true)
             return null
         })
-} 
+}
 
 // Get all tweets
 export const getHome = (responseCB, loadingCB) => {
@@ -91,7 +91,7 @@ export const getTweets = (data, responseCB, loadingCB) => {
 }
 
 // Send a tweet 
-export const createTweet = ({data, token}, responseCB) => {
+export const createTweet = ({ data, token }, responseCB) => {
     return axios
         .post(url.CREATE_TWEET, data, token)
         .then(response => {
@@ -104,7 +104,7 @@ export const createTweet = ({data, token}, responseCB) => {
 }
 
 // Follow/Unfollow a user
-export const followUser = ({data, token}, responseCB, loadingCB) => {
+export const followUser = ({ data, token }, responseCB, loadingCB) => {
     if (loadingCB) loadingCB(true)
     return axios
         .post(url.FOLLOW_MANAGER, data, token)
