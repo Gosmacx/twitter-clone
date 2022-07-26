@@ -6,6 +6,21 @@ responseCB (Response Callback) => It is the function that is run when a response
 loadingCB (Loading Callback) => Handles a loading state if the calling party has a loading state
 */
 
+export const loginUser = (data, responseCB, loadingCB) => {
+    if (loadingCB) loadingCB(true)
+    return axios
+        .post(url.LOGIN_USER, data)
+        .then(response => {
+            if (loadingCB) loadingCB(false)
+            if (responseCB) responseCB(response.data)
+            return response.data
+        })
+        .catch(err => {
+            if (loadingCB) loadingCB(true)
+            return null
+        })
+} 
+
 // Get all tweets
 export const getHome = (responseCB, loadingCB) => {
     if (loadingCB) loadingCB(true)
@@ -58,9 +73,10 @@ export const getTweets = (data, responseCB, loadingCB) => {
         })
 }
 
-export const createTweet = (data, responseCB) => {
+// Send a tweet 
+export const createTweet = ({data, token}, responseCB) => {
     return axios
-        .post(url.CREATE_TWEET, data.tweet, data.token)
+        .post(url.CREATE_TWEET, data, token)
         .then(response => {
             if (responseCB) responseCB(response.data)
             return response.data
@@ -70,6 +86,7 @@ export const createTweet = (data, responseCB) => {
         })
 }
 
+// Follow/Unfollow a user
 export const followUser = ({data, token}, responseCB, loadingCB) => {
     if (loadingCB) loadingCB(true)
     return axios

@@ -7,6 +7,7 @@ import { login } from '../store/user'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from '../utils/axios'
 import CryptoJS from 'crypto-js'
+import { loginUser } from '../api/requests/requests'
 
 function App() {
     const user = useSelector(state => state.user)
@@ -24,32 +25,20 @@ function App() {
     const auth = () => {
         if (loading) return
         if (!username || !password) return;
-        setLoading(true)
         const cryptedName = CryptoJS.AES.encrypt(username, import.meta.env.VITE_SECRET_KEY).toString()
         const cryptedPswrd = CryptoJS.AES.encrypt(password, import.meta.env.VITE_SECRET_KEY).toString()
-        axios.post("/login", {
+
+        let sendToData = {
             username: cryptedName,
             password: cryptedPswrd
-        }).then(response => {
-            if (!response.data) return
-            const d = response.data
-            const data = {
-                username: d.username,
-                name: d.name,
-                id: d.id,
-                photo: d.photo,
-                banner: d.banner,
-                description: d.description,
-                followers: d.followers,
-                following: d.following,
-                token: d.token
-            }
+        }
+
+        const response = (data) => {
             dispatch(login(data))
             navigate("/home")
-        }).catch((e) => {
-            alert("Hatalı kullanıcı adı veya şifre...")
-            setLoading(false)
-        })
+        }
+
+        loginUser(sendToData, response, setLoading)
     }
 
     return (

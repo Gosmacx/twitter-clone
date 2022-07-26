@@ -19,10 +19,13 @@ function App({ refresh }) {
     const tweet = () => {
         if (!content || content.length < 3) return;
 
-        let twData = {
-            user: user.id,
-            date: Date.now(),
-            content
+        let sendToData = {
+            data: {
+                user: user.id,
+                date: Date.now(),
+                content
+            },
+            token: user.token
         }
 
         const response = (data) => {
@@ -31,7 +34,7 @@ function App({ refresh }) {
             if (data == 'OK') return refresh()
         }
 
-        createTweet({ tweet: twData, token: user.token }, response)
+        createTweet(sendToData, response)
     }
 
     let _ = content.length > 0
