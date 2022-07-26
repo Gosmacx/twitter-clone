@@ -57,3 +57,15 @@ export const getTweets = (data, responseCB, loadingCB) => {
             return null
         })
 }
+
+export const createTweet = (data, responseCB) => {
+    return axios
+        .post(url.CREATE_TWEET, data.tweet, data.token)
+        .then(response => {
+            if (responseCB) responseCB(response.data)
+            return response.data
+        })
+        .catch(err => {
+            return null
+        })
+}
