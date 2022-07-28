@@ -3,7 +3,7 @@
 Fully functional mern-stack twitter clone application
 
 ## Features
-- Auth
+- Auth (Login/Register)
 - Upload Profile Picture/Banner (With resize)
 - Create tweet
 - Follow/Unfollow
