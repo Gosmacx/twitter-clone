@@ -12,6 +12,24 @@ Fully functional mern-stack twitter clone application
 ## Used technologies
 `React`, `Redux`, `Tailwind`, `Axios`, `Express`, `Mongodb`, `Multer`, `Sharp`, `JWT` 
  
+## Setup Locally
+
+First copy the project to your computer
+```
+git clone https://github.com/Gosmacx/twitter-clone.git
+```
+
+Then enter the created file and download the requirements
+```
+cd twitter-clone
+npm install (Do the same for both folders client/api)
+```
+Then create .env file for both folders
+```env
+mongodb='mongo db database link'
+secretKey='bla bla!
+```
+
 ## Image Upload/Resize
 ![gif](https://github.com/Gosmacx/twitter-clone/blob/master/screenshots/resize-imagesv2.gif?raw=true)
 
