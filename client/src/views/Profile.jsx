@@ -117,9 +117,7 @@ function App() {
                                         </div>
                                         <div></div>
                                         <EditButton active={selfMode} />
-
                                         <FollowButton active={!selfMode} user={user} followersCallback={followersCallback} followingCallback={followingCallback} />
-
                                     </div>
                                     <div className='h-10 w-full' ></div>
                                 </div>
