@@ -2,17 +2,17 @@
 
 Fully functional mern-stack twitter clone application
 
-## Features
+## 💡 Features
 - Auth (Login/Register)
 - Upload Profile Picture/Banner (With resize)
 - Create tweet
 - Follow/Unfollow
 - Change user information
 
-## Used technologies
+## 👨‍💻 Used technologies
 `React`, `Redux`, `Tailwind`, `Axios`, `Express`, `Mongodb`, `Multer`, `Sharp`, `JWT` 
  
-## Setup Locally
+## ⚙️ Setup Locally
 
 First copy the project to your computer
 ```
@@ -30,15 +30,15 @@ mongodb='mongo db database link'
 secretKey='bla bla!
 ```
 
-## Image Upload/Resize
+## 🖼️ Image Upload/Resize
 ![gif](https://github.com/Gosmacx/twitter-clone/blob/master/screenshots/resize-imagesv2.gif?raw=true)
 
-## Video
+## 🎥 Video
 
 https://user-images.githubusercontent.com/50182711/179420591-847d2592-0091-4176-ae90-961df57db332.mp4
 
  
-## Screenshots
+## 📸 Screenshots
 
 #### `Login/Regsiter`
 
