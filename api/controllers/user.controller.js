@@ -16,14 +16,14 @@ function uid() {
 export const login = async (req, res) => {
     const { username, password } = req.body
     if (!username || !password)
-        return res.status(500).send("Err")
+        return res.status(400).send("Bad field")
 
     const decryptUsername = CryptoJS.AES.decrypt(username, process.env.secretKey);
     var originalUsername = decryptUsername.toString(CryptoJS.enc.Utf8);
 
     const user = await userSchema.findOne({ username: originalUsername })
     if (!user)
-        return res.status(500).send("Err")
+        return res.status(404).send("User not found")
 
     const passwordInDb = CryptoJS.AES.decrypt(user.password, process.env.secretKey)
     const joinedPassword = CryptoJS.AES.decrypt(password, process.env.secretKey)
@@ -32,7 +32,7 @@ export const login = async (req, res) => {
     const orginalPswrd = joinedPassword.toString(CryptoJS.enc.Utf8)
 
     if (orginalDB !== orginalPswrd)
-        return res.status(500).send("Err")
+        return res.status(401).send("Invalid auth")
 
     const tokenCreated = jwt.sign({ id: user.id, username: originalUsername, password: orginalPswrd }, process.env.secretKey, { expiresIn: '24h' });
 
@@ -52,7 +52,7 @@ export const login = async (req, res) => {
 // Create Account
 export const register = async (req, res) => {
     const { username, password, mail, name } = req.body
-    if (!username || !password || !mail || !name) return res.status(500).send("Err")
+    if (!username || !password || !mail || !name) return res.status(400).send("Bad field")
     const createUID = uid()
 
     const newUser = new userSchema({
@@ -70,7 +70,7 @@ export const register = async (req, res) => {
     })
     await newUser.save();
     const createdUser = await userSchema.findOne({ id: createUID })
-    if (!createdUser) return res.status(500).send("Err")
+    if (!createdUser) return res.status(500).send("Username taken")
 
     const tokenCreated = jwt.sign({ id: createUID, username: username, password: password }, process.env.secretKey, { expiresIn: '24h' });
 
@@ -92,10 +92,10 @@ export const logintoken = async (req, res) => {
     const { token } = req.body
 
     const decodedCode = jwt.verify(token, process.env.secretKey)
-    if (!decodedCode) return res.status(401).send("Yetkisiz erişim.")
+    if (!decodedCode) return res.status(401).send("Unauthorized access")
 
     const user = await userSchema.findOne({ id: decodedCode.id })
-    if (!user) return;
+    if (!user) return res.status(404).send("User not found");
 
     res.send({
         username: user.username,
