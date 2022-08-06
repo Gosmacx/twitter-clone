@@ -8,6 +8,7 @@ Fully functional mern-stack twitter clone application
 - Create tweet
 - Follow/Unfollow
 - Change user information
+- Fully responsive design
 
 ## 👨‍💻 Used technologies
 `React`, `Redux`, `Tailwind`, `Axios`, `Express`, `Mongodb`, `Multer`, `Sharp`, `JWT` 
@@ -54,7 +55,3 @@ https://user-images.githubusercontent.com/50182711/179420591-847d2592-0091-4176-
 
 #### Followers / Following Page
 ![ss](https://github.com/Gosmacx/twitter-clone/blob/master/screenshots/ss4.png?raw=true)
-
-#### Responsive Design
-Screenshots comeback soon...
-
